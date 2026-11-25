@@ -6,6 +6,9 @@
   const API = `https://api.github.com/repos/${REPO}/releases?per_page=100`
   const CACHE_KEY = 'superdesk-versions:v1'
   const CACHE_MS = 10 * 60 * 1000
+  const REQUEST_TIMEOUT_MS = 10 * 1000
+  // Each page is one request out of GitHub's 60 an hour per visitor.
+  const MAX_PAGES = 5
   const includeTests = new URLSearchParams(location.search).has('test')
   const list = document.getElementById('versions')
 
@@ -29,14 +32,33 @@
     } catch {}
   }
 
+  async function fetchPage(url) {
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
+    try {
+      const response = await fetch(url, {
+        headers: { Accept: 'application/vnd.github.html+json' },
+        signal: controller.signal,
+      })
+      if (!response.ok) throw new Error(`GitHub answered ${response.status}`)
+      const next = /<([^>]+)>;\s*rel="next"/.exec(response.headers.get('Link') || '')
+      return { items: await response.json(), next: next ? next[1] : null }
+    } finally {
+      clearTimeout(timer)
+    }
+  }
+
   async function loadReleases() {
     const cached = readCache()
     if (cached) return cached
-    const response = await fetch(API, {
-      headers: { Accept: 'application/vnd.github.html+json' },
-    })
-    if (!response.ok) throw new Error(`GitHub answered ${response.status}`)
-    const releases = (await response.json())
+    const all = []
+    let url = API
+    for (let page = 0; url && page < MAX_PAGES; page++) {
+      const { items, next } = await fetchPage(url)
+      all.push(...items)
+      url = next
+    }
+    const releases = all
       .filter((r) => !r.draft)
       .map((r) => ({
         version: r.tag_name.replace(/^v/, ''),

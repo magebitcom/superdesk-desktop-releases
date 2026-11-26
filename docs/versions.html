@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src https://api.github.com; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>All versions · Superdesk</title>
+    <meta
+      name="description"
+      content="Every released version of the Superdesk desktop app."
+    />
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="dot-grid" aria-hidden="true"></div>
+    <main>
+      <a class="brand" href="./">
+        <img src="logo.svg" alt="" />
+        Superdesk
+      </a>
+
+      <section class="card">
+        <h1>All versions</h1>
+        <p class="description">
+          Every released version of the desktop app, newest first. You only
+          need an older one if the newest gives you trouble.
+        </p>
+      </section>
+
+      <div id="versions" class="versions" aria-live="polite">
+        <noscript>
+          <section class="card">
+            <p class="description">
+              This list needs JavaScript.
+              <a href="https://github.com/magebitcom/superdesk-desktop-releases/releases"
+                >See the versions on GitHub instead</a
+              >.
+            </p>
+          </section>
+        </noscript>
+      </div>
+
+      <p class="back"><a href="./">Back to the download page</a></p>
+
+      <footer>
+        Made by <a href="https://magebit.com/">Magebit</a> ·
+        <a
+          href="https://github.com/magebitcom/superdesk-desktop-releases/blob/master/LICENSE.md"
+          >Licence</a
+        >
+      </footer>
+    </main>
+    <script src="versions.js"></script>
+  </body>
+</html>

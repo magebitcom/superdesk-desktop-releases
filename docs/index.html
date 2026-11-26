@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Download Superdesk</title>
+    <meta
+      name="description"
+      content="Download the Superdesk desktop app for Windows and Linux."
+    />
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="dot-grid" aria-hidden="true"></div>
+    <main>
+      <span class="brand">
+        <img src="logo.svg" alt="" />
+        Superdesk
+      </span>
+
+      <section class="card hero">
+        <h1>Superdesk on your desktop</h1>
+        <p class="description">
+          Your company's Superdesk in its own window, with new versions
+          offered as soon as they're out.
+        </p>
+
+        <div class="downloads">
+          <a
+            class="download"
+            data-os="windows"
+            href="https://github.com/magebitcom/superdesk-desktop-releases/releases/latest/download/Superdesk-windows-x64-setup.exe"
+          >
+            <span class="os-icon os-icon--windows" aria-hidden="true"></span>
+            <span class="download__label">Download for Windows</span>
+            <span class="download__meta">Windows 10 and 11, 64-bit</span>
+          </a>
+          <a
+            class="download"
+            data-os="linux"
+            href="https://github.com/magebitcom/superdesk-desktop-releases/releases/latest/download/Superdesk-linux-x86_64.AppImage"
+          >
+            <span class="os-icon os-icon--linux" aria-hidden="true"></span>
+            <span class="download__label">Download for Linux</span>
+            <span class="download__meta">AppImage, 64-bit</span>
+          </a>
+        </div>
+
+        <p class="note">
+          There is no Mac version yet. It is on the way.
+        </p>
+
+        <p class="links">
+          <a href="versions.html">All versions</a>
+        </p>
+      </section>
+
+      <section class="card steps">
+        <h2>Installing</h2>
+
+        <details data-os="windows">
+          <summary>On Windows</summary>
+          <ol>
+            <li>Open the file you downloaded.</li>
+            <li>
+              Windows may say <strong>Windows protected your PC</strong>. This
+              is because the app isn't signed yet. Click
+              <strong>More info</strong>, then <strong>Run anyway</strong>.
+              <div class="smartscreen" aria-hidden="true">
+                <p class="smartscreen__title">Windows protected your PC</p>
+                <p class="smartscreen__text">
+                  Microsoft Defender SmartScreen prevented an unrecognised app
+                  from starting.
+                </p>
+                <p class="smartscreen__text">
+                  App: Superdesk-windows-x64-setup.exe<br />
+                  Publisher: Unknown publisher
+                </p>
+                <div class="smartscreen__buttons">
+                  <span class="smartscreen__button smartscreen__button--hint"
+                    >Run anyway</span
+                  >
+                  <span class="smartscreen__button">Don't run</span>
+                </div>
+              </div>
+            </li>
+            <li>Superdesk installs and opens by itself.</li>
+          </ol>
+        </details>
+
+        <details data-os="linux">
+          <summary>On Linux</summary>
+          <ol>
+            <li>
+              Allow the file to run. In your file manager, right-click it,
+              open <strong>Properties</strong> and turn on
+              <strong>Allow executing file as program</strong>. Or in a
+              terminal:
+              <pre><code>chmod +x Superdesk-linux-x86_64.AppImage</code></pre>
+            </li>
+            <li>Double-click the file to open Superdesk.</li>
+            <li>
+              If nothing happens on Ubuntu, install the library AppImages
+              need, then try again:
+              <pre><code>sudo apt install libfuse2t64</code></pre>
+              On Ubuntu 22.04 the package is called <code>libfuse2</code>.
+            </li>
+          </ol>
+        </details>
+      </section>
+
+      <section class="card">
+        <h2>First start</h2>
+        <p class="description">
+          Superdesk asks for your company's Superdesk address, such as
+          <code>desk.yourcompany.com</code>. It's the address you use to open
+          Superdesk in your browser. If you're not sure, ask your IT team.
+        </p>
+        <p class="description">
+          When a new version is out, Superdesk offers it in the sidebar. To
+          check yourself, open <strong>Help</strong> and choose
+          <strong>Check for updates</strong>.
+        </p>
+      </section>
+
+      <footer>
+        Made by <a href="https://magebit.com/">Magebit</a> ·
+        <a
+          href="https://github.com/magebitcom/superdesk-desktop-releases/blob/master/LICENSE.md"
+          >Licence</a
+        >
+      </footer>
+    </main>
+    <script src="download.js"></script>
+  </body>
+</html>

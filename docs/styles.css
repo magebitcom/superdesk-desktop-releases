@@ -1,0 +1,483 @@
+/* Mirrors the desktop app's own pages and Superdesk's sign-in page. */
+
+@font-face {
+  font-family: "Geist Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("fonts/geist-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Geist Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("fonts/geist-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --border: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --code-background: oklch(0.97 0 0);
+  font-family: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --border: oklch(1 0 0 / 10%);
+    --ring: oklch(0.556 0 0);
+    --code-background: oklch(1 0 0 / 6%);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  min-height: 100vh;
+  padding: 48px 16px;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.dot-grid {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 640px;
+  pointer-events: none;
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--foreground) 18%, transparent) 1px,
+    transparent 1.4px
+  );
+  background-size: 28px 28px;
+  mask-image: radial-gradient(
+    ellipse 70% 80% at 50% 30%,
+    black 20%,
+    transparent 80%
+  );
+}
+
+main {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.brand img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.card {
+  width: 100%;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background-color: color-mix(in oklab, var(--card) 72%, transparent);
+  box-shadow:
+    0 24px 56px -28px oklch(0 0 0 / 28%),
+    0 1px 2px oklch(0 0 0 / 6%);
+  backdrop-filter: blur(16px);
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.description,
+.note,
+li {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--muted-foreground);
+}
+
+.description + .description {
+  margin-top: 12px;
+}
+
+strong {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+a:focus-visible,
+summary:focus-visible {
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
+}
+
+code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--code-background);
+  color: var(--foreground);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+}
+
+pre {
+  margin: 8px 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--code-background);
+  overflow-x: auto;
+}
+
+pre code {
+  padding: 0;
+  background: none;
+}
+
+/* Downloads */
+
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.download {
+  flex: 1 1 200px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  text-decoration: none;
+  transition: background-color 150ms;
+}
+
+.download:hover {
+  background: color-mix(in oklab, var(--primary) 85%, transparent);
+}
+
+.download:active {
+  transform: translateY(1px);
+}
+
+.download__label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.download__meta {
+  font-size: 13px;
+  line-height: 18px;
+  opacity: 0.7;
+  grid-column: 2;
+}
+
+:root[data-os="windows"] .download:not(.download--primary),
+:root[data-os="linux"] .download:not(.download--primary) {
+  border-color: var(--border);
+  background: transparent;
+  color: var(--foreground);
+}
+
+:root[data-os="windows"] .download:not(.download--primary):hover,
+:root[data-os="linux"] .download:not(.download--primary):hover {
+  background: var(--secondary);
+}
+
+.note {
+  margin-top: 12px;
+}
+
+:root[data-os="windows"] .note,
+:root[data-os="linux"] .note {
+  display: none;
+}
+
+.links {
+  margin: 16px 0 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Install steps */
+
+details + details {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+summary {
+  padding: 4px 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+ol {
+  margin: 8px 0 4px;
+  padding-left: 20px;
+}
+
+li + li {
+  margin-top: 10px;
+}
+
+li::marker {
+  color: var(--muted-foreground);
+}
+
+/* A sketch of the Windows warning, so people recognise it. */
+
+.smartscreen {
+  margin: 10px 0 2px;
+  padding: 16px;
+  border-radius: 6px;
+  background: #0b57a4;
+  color: #fff;
+  font-family: "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+}
+
+.smartscreen__title {
+  margin: 0 0 8px;
+  font-size: 17px;
+  line-height: 22px;
+}
+
+.smartscreen__text {
+  margin: 0 0 8px;
+  font-size: 12px;
+  line-height: 17px;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.smartscreen__buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.smartscreen__button {
+  padding: 4px 16px;
+  border: 1px solid #fff;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.smartscreen__button--hint {
+  outline: 2px solid #ffd84d;
+  outline-offset: 2px;
+}
+
+footer {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--muted-foreground);
+}
+
+/* All versions */
+
+a.brand {
+  color: inherit;
+  text-decoration: none;
+}
+
+.versions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.status {
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--muted-foreground);
+}
+
+.version__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.version__title {
+  margin: 0;
+}
+
+.version__date {
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--muted-foreground);
+}
+
+.badge {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.badge--muted {
+  background: var(--secondary);
+  color: var(--muted-foreground);
+}
+
+.version__notes {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+
+.version__notes > :first-child {
+  margin-top: 0;
+}
+
+.version__notes > :last-child {
+  margin-bottom: 0;
+}
+
+.version__files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.file {
+  flex: 1 1 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+  transition: background-color 150ms;
+}
+
+.file:hover {
+  background: var(--secondary);
+}
+
+.file__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.file__meta {
+  color: var(--muted-foreground);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.back {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* OS marks, drawn in the text colour */
+
+.os-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: center / contain no-repeat;
+  mask: center / contain no-repeat;
+}
+
+.os-icon--windows {
+  -webkit-mask-image: url("icons/windows.svg");
+  mask-image: url("icons/windows.svg");
+}
+
+.os-icon--linux {
+  -webkit-mask-image: url("icons/linux.svg");
+  mask-image: url("icons/linux.svg");
+}
